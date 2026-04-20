@@ -1,44 +1,86 @@
-Desenvolvido com foco em organização, escalabilidade e boas práticas de arquitetura fullstack.
+<div align="center">
 
-📸 Preview
+<h1>Studio Manager</h1>
 
-![Dashboard](./docs/screenshots/Relatorio.png)
-![Clientes](./docs/screenshots/Cliente.png)
+<p>Sistema de gestão para salão de beleza — controle de funcionários, clientes, atendimentos e relatórios mensais.</p>
 
-🧠 Visão Geral
+<p>
+  <img src="https://img.shields.io/badge/Node.js-18+-339933?style=flat-square&logo=node.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/MongoDB-Atlas-47A248?style=flat-square&logo=mongodb&logoColor=white" />
+  <img src="https://img.shields.io/badge/JWT-Auth-000000?style=flat-square&logo=jsonwebtokens&logoColor=white" />
+</p>
 
-Aplicação fullstack composta por uma API REST em Node.js e um frontend em React. O sistema permite:
+</div>
 
-Gerenciamento de clientes e funcionários
-Registro de atendimentos
-Cálculo de comissões
-Visualização de relatórios mensais
+---
 
-🏗️ Arquitetura
+## 📋 Sobre o Projeto
+
+Aplicação fullstack desenvolvida para gerenciar as operações diárias de um estúdio de beleza. O sistema centraliza o controle de funcionários, clientes e atendimentos em uma interface elegante e responsiva, com relatórios mensais automáticos e autenticação segura.
+
+### ✨ Destaques
+
+- 🔐 **Autenticação JWT** — acesso protegido com token de 8 horas
+- 📊 **Relatórios mensais** — dashboard que zera automaticamente todo mês
+- 💰 **Cálculo de comissões** — ganhos por funcionário com filtro de período
+- 🏆 **Ranking de clientes** — Top 3 mais atendidos do mês
+- 📱 **Interface responsiva** — funciona em desktop e mobile
+
+---
+
+## 🚀 Tecnologias
+
+<table>
+  <tr>
+    <td><strong>Backend</strong></td>
+    <td><strong>Frontend</strong></td>
+    <td><strong>Banco & Infra</strong></td>
+  </tr>
+  <tr>
+    <td>
+      Node.js + Express<br/>
+      TypeScript<br/>
+      JWT + bcryptjs<br/>
+      tsup (build)
+    </td>
+    <td>
+      React 18 + TypeScript<br/>
+      Vite<br/>
+      React Router DOM v6<br/>
+      Axios
+    </td>
+    <td>
+      MongoDB Atlas<br/>
+      Mongoose<br/>
+      Render (backend)<br/>
+      Netlify (frontend)
+    </td>
+  </tr>
+</table>
+
+---
+
+## 🏗️ Arquitetura
 
 O backend segue o padrão de separação em camadas:
 
-Controller → recebe requisições HTTP
-Service → contém regras de negócio
-Repository → acesso ao banco de dados
+```
+Controller → Service → Repository → Model
+```
 
-Essa abordagem facilita manutenção, testes e escalabilidade da aplicação.
+- **Controller** — recebe a requisição HTTP e delega ao service
+- **Service** — contém as regras de negócio e validações
+- **Repository** — responsável pelo acesso ao banco de dados
+- **Model** — define o schema do Mongoose
 
-🚀 Tecnologias
-Backend
-Node.js + Express
-TypeScript
-MongoDB + Mongoose
-JWT (autenticação stateless)
-bcryptjs (hash de senhas)
-Frontend
-React 18 + TypeScript
-Vite
-React Router DOM v6
-Axios (com interceptors para autenticação)
+---
 
-📁 Estrutura do Projeto
-/
+## 📁 Estrutura do Projeto
+
+```
+studio-manager/
 ├── backend/
 │   └── src/
 │       ├── controllers/
@@ -46,8 +88,11 @@ Axios (com interceptors para autenticação)
 │       ├── repositories/
 │       ├── models/
 │       ├── middlewares/
+│       │   └── auth-middleware.ts
 │       ├── data/
+│       │   └── database.ts
 │       ├── utils/
+│       │   └── http-helper.ts
 │       ├── routes.ts
 │       ├── app.ts
 │       └── server.ts
@@ -57,68 +102,150 @@ Axios (com interceptors para autenticação)
         ├── api/
         ├── services/
         ├── pages/
+        │   ├── Login.tsx
+        │   ├── Home.tsx
+        │   ├── Dashboard.tsx
+        │   ├── Employees.tsx
+        │   ├── Clients.tsx
+        │   └── Appointments.tsx
         ├── components/
+        │   ├── Navbar.tsx
+        │   ├── PrivateRoute.tsx
+        │   ├── EmployeeEarnings.tsx
+        │   └── ui/
+        │       ├── Toast.tsx
+        │       └── Confirm.tsx
         ├── routes/
-        ├── App.tsx
-        └── index.css
-⚙️ Funcionalidades
-🔐 Autenticação
-Login com usuário e senha
-Token JWT com expiração
-Rotas protegidas por autenticação
-Redirecionamento automático ao expirar sessão
-👩‍💼 Funcionários
-Cadastro, listagem e remoção
-Controle de comissão
-Cálculo de ganhos por período
-👥 Clientes
-Cadastro e gerenciamento
-Busca por nome ou telefone
-Paginação de resultados
-📅 Atendimentos
-Registro de serviços realizados
-Associação entre cliente e funcionário
-Histórico completo com paginação
-📊 Dashboard
-Relatórios mensais automáticos
-Faturamento bruto e líquido
-Ticket médio
-Ranking de desempenho
-Indicadores de produtividade
-🔌 API
+        └── App.tsx
+```
 
-Base URL definida via variável de ambiente.
+---
 
-🔐 Auth
-Método	Rota	Descrição
-POST	/auth/login	Autentica usuário
-👩‍💼 Funcionários
-Método	Rota	Descrição
-GET	/employees	Lista todos
-POST	/employees	Cria funcionário
-GET	/employees/:id	Busca por ID
-GET	/employees/:id/earnings	Ganhos totais
-GET	/employees/:id/earnings/date	Ganhos por período
-DELETE	/employees/:id	Remove
+## ⚙️ Funcionalidades
 
-👥 Clientes
-Método	Rota	Descrição
-GET	/clients	Lista todos
-GET	/clients/search	Busca
-POST	/clients	Cria cliente
-GET	/clients/:id	Busca por ID
-DELETE	/clients/:id	Remove
+<details>
+<summary><strong>🔐 Autenticação</strong></summary>
 
-📅 Atendimentos
-Método	Rota	Descrição
-GET	/appointments	Lista todos
-POST	/appointments	Cria atendimento
-GET	/appointments/:id	Busca por ID
-DELETE	/appointments/:id	Remove
+- Login com usuário e senha
+- Token JWT com expiração de 8 horas
+- Todas as rotas da API protegidas
+- Redirecionamento automático ao expirar sessão
+- Senhas com hash bcrypt (salt rounds: 10)
 
-🔐 Segurança
-Senhas armazenadas com hash (bcrypt)
-Autenticação via JWT
-Rotas protegidas por middleware
-Variáveis sensíveis isoladas em .env
-Preparado para uso com HTTPS em produção
+</details>
+
+<details>
+<summary><strong>👥 Funcionários</strong></summary>
+
+- Listar, cadastrar e excluir funcionários
+- Campos: nome, função e percentual de comissão
+- Cálculo de ganhos por período com filtro de datas
+- Atalhos rápidos: este mês, este ano, últimos 30/90 dias
+
+</details>
+
+<details>
+<summary><strong>👤 Clientes</strong></summary>
+
+- Listar, cadastrar e excluir clientes
+- Campos: nome e telefone
+- Busca em tempo real por nome ou telefone
+- Paginação de 5 em 5
+- Ranking Top 3 clientes mais atendidos do mês (zera automaticamente)
+
+</details>
+
+<details>
+<summary><strong>📅 Atendimentos</strong></summary>
+
+- Registrar atendimentos vinculando cliente e funcionário
+- Busca de cliente por nome com dropdown em tempo real
+- Histórico completo paginado de 5 em 5
+- Exclusão de atendimentos
+
+</details>
+
+<details>
+<summary><strong>📊 Relatório / Dashboard</strong></summary>
+
+- Dados filtrados pelo **mês atual** — zera no primeiro dia de cada mês
+- Faturamento bruto e líquido (descontando comissões)
+- Ticket médio por atendimento
+- Funcionário destaque e procedimento mais realizado
+- Gráfico de barras por funcionário com comissão a pagar
+- Ranking dos procedimentos mais populares
+- 5 atendimentos mais recentes do mês
+
+</details>
+
+---
+
+## 🌐 Endpoints da API
+
+**Base URL:** `https://studio-manager-5z6l.onrender.com/api/v1`
+
+### 🔓 Auth (público)
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| `POST` | `/auth/login` | Autentica e retorna JWT |
+
+### 🔒 Funcionários (protegido)
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| `GET` | `/employees` | Lista todos |
+| `POST` | `/employees` | Cria funcionário |
+| `GET` | `/employees/:id` | Busca por ID |
+| `GET` | `/employees/:id/earnings` | Ganhos totais |
+| `GET` | `/employees/:id/earnings/date` | Ganhos por período (`?startDate=&endDate=`) |
+| `GET` | `/employees/:id/appointments` | Atendimentos do funcionário |
+| `DELETE` | `/employees/:id` | Remove funcionário |
+
+### 🔒 Clientes (protegido)
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| `GET` | `/clients` | Lista todos |
+| `GET` | `/clients/search` | Busca por nome/telefone (`?q=`) |
+| `POST` | `/clients` | Cria cliente |
+| `GET` | `/clients/:id` | Busca por ID |
+| `GET` | `/clients/:clientId/appointments` | Histórico do cliente |
+| `DELETE` | `/clients/:id` | Remove cliente |
+
+### 🔒 Atendimentos (protegido)
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| `GET` | `/appointments` | Lista todos |
+| `POST` | `/appointments` | Cria atendimento |
+| `GET` | `/appointments/:id` | Busca por ID |
+| `DELETE` | `/appointments/:id` | Remove atendimento |
+
+---
+
+## 🚢 Deploy
+
+| Serviço | Plataforma | URL |
+|---------|-----------|-----|
+| Frontend | Netlify | `https://veronica-bianco-studio.netlify.app` |
+| Backend | Render | `https://studio-manager-5z6l.onrender.com` |
+| Banco | MongoDB Atlas | M0 Free |
+
+> ⚠️ O backend está no plano gratuito do Render — pode demorar até 50 segundos para responder após um período de inatividade.
+
+---
+
+## 🔒 Segurança
+
+- Senhas armazenadas com **bcrypt** (salt rounds: 10)
+- Tokens JWT com expiração de **8 horas**
+- Todas as rotas protegidas exigem `Authorization: Bearer <token>`
+- Variáveis sensíveis isoladas em `.env` — nunca versionadas
+- `autoIndex` desativado em produção
+
+---
+
+<div align="center">
+  <p>Desenvolvido por <strong>Christian A. Sangy</strong></p>
+</div>
